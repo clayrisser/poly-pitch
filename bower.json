@@ -1,6 +1,14 @@
 {
   "name": "poly-pitch",
-  "description": "Detects the pitch of an audio input",
+  "description": "An audio pitch detector and tuner for Polymer ",
+  "keywords": [
+    "web-components",
+    "pitch",
+    "tuner",
+    "audio",
+    "guitar",
+    "sound"
+  ]
   "main": "poly-pitch.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
