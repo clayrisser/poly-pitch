@@ -1,0 +1,166 @@
+<link rel="import" href="../polymer/polymer.html">
+<script src="../PitchDetector/pitchdetector.js"></script>
+
+<!--
+`poly-pitch`
+Detects the pitch of an audio input
+
+@demo demo/index.html
+-->
+
+<dom-module id="poly-pitch">
+  <template>
+    <template is="dom-if" if="[[visible]]" restamp="true">
+      <p id="status">Status: [[status]]</p>
+      <p id="status">Pitch: [[pitch]]</p>
+      <p id="status">Note: [[note]]</p>
+      <p id="status">NoteId: [[noteId]]</p>
+      <p id="status">Detune: [[detune]]</p>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'poly-pitch',
+
+      properties: {
+        /**
+         * Frequency tuner refreshes in milliseconds
+         */
+        refresh: {
+          type: Number,
+          value: 500
+        },
+        /**
+         * Makes element visible
+         */
+        visible: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * Default message when no audio detected
+         */
+        na: {
+          type: String,
+          value: 'N/A'
+        },
+        /**
+         * Status of the pitch detector ['Not listening', 'Listening', 'Browser unsupported']
+         */
+        status: {
+          type: String,
+          value: 'Not listening',
+          notify: true
+        },
+        /**
+         * Pitch of the audio input
+         */
+        pitch: {
+          type: Number,
+          notify: true
+        },
+        /**
+         * Note of the audio input
+         */
+        note: {
+          type: String,
+          notify: true
+        },
+        /**
+         * NoteId of the audio input
+         */
+        noteId: {
+          type: Number,
+          notify: true
+        },
+        /**
+         * Detune of the audio input
+         */
+        detune: {
+          type: Number,
+          notify: true
+        },
+        _refreshed: {
+          type: Boolean,
+          value: false
+        },
+        _samples: {
+          type: Object,
+          value: {
+            pitches: [],
+            noteIds: [],
+            detunes: []
+          }
+        },
+        _noteStrings: {
+          type: Array,
+          value: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+        }
+
+      },
+
+      ready: function() {
+        this.pitchDetector = new PitchDetector();
+        this.pitchDetector.on('pitchData', function(e) {
+          if (this._refreshed) { // collect samples
+            if (e.detail.pitch) {
+              this._samples.pitches.push(e.detail.pitch);
+            }
+            if (e.detail.noteId) {
+              this._samples.noteIds.push(e.detail.noteId);
+            }
+            if (e.detail.detune) {
+              this._samples.detunes.push(e.detail.detune);
+            }
+          } else { // average and clear samples
+            this._refreshed = true;
+            window.setTimeout(function() {
+              if (this._samples.noteIds.length > 0) {
+                this.pitch = Math.round(this._averageNumbers(this._samples.pitches));
+              } else {
+                this.pitch = this.na;
+              }
+              if (this._samples.noteIds.length > 0) {
+                this.noteId = Math.round(this._averageNumbers(this._samples.noteIds));
+                this.note = this._noteStrings[this.noteId % this._noteStrings.length];
+              } else {
+                this.noteId = this.na;
+                this.note = this.na;
+              }
+              if (this._samples.detunes.length) {
+                this.detune = Math.round(this._averageNumbers(this._samples.detunes));
+              } else {
+                this.detune = this.na;
+              }
+              this._refreshed = false;
+            }.bind(this, e), this.refresh);
+            this.set('_samples', {
+              pitches: [],
+              noteIds: [],
+              detunes: []
+            });
+          }
+        }.bind(this));
+        this.pitchDetector.on('error', function() {
+          this.status = 'Browser unsupported';
+        }.bind(this));
+        this.pitchDetector.on('startListening', function() {
+          this.status = 'Listening';
+        }.bind(this));
+        this.pitchDetector.on('stopListening', function() {
+          this.status = 'Not listening';
+        }.bind(this))
+        this.pitchDetector.startListening();
+      },
+
+      _averageNumbers: function(listOfNumbers) {
+        var total = 0;
+        for (var i = 0; i < listOfNumbers.length; i++) {
+          total += listOfNumbers[i];
+        }
+        return total / listOfNumbers.length;
+      }
+    });
+  </script>
+</dom-module>
