@@ -1,0 +1,27 @@
+{
+  "name": "PitchDetector",
+  "version": "0.0.4",
+  "homepage": "https://github.com/tirithen/PitchDetector",
+  "authors": [
+    "Fredrik Söderström <tirithen@gmail.com>"
+  ],
+  "description": "An API to detect which tone is beeing played directly in the browser",
+  "main": "pitchdetector.js",
+  "keywords": [
+    "audio",
+    "pitch detection",
+    "html5",
+    "tuner",
+    "music"
+  ],
+  "license": "MIT",
+  "_release": "0.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.4",
+    "commit": "9abd465839f5ac18a814fea6146aad6a61763651"
+  },
+  "_source": "https://github.com/tirithen/PitchDetector.git",
+  "_target": "^0.0.4",
+  "_originalSource": "pitchdetector"
+}

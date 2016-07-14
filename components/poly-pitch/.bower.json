@@ -1,0 +1,26 @@
+{
+  "name": "poly-pitch",
+  "description": "Detects the pitch of an audio input",
+  "main": "poly-pitch.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "PitchDetector": "pitchdetector#^0.0.4"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/jamrizzi/poly-pitch",
+  "_release": "9d96cede7d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "9d96cede7dc1f83a26f893ecb5e4625600e1ee04"
+  },
+  "_source": "git://github.com/jamrizzi/poly-pitch.git",
+  "_target": "master",
+  "_originalSource": "jamrizzi/poly-pitch",
+  "_direct": true
+}
