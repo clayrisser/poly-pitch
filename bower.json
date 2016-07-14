@@ -1,6 +1,6 @@
 {
   "name": "poly-pitch",
-  "description": "An audio pitch detector and tuner for Polymer ",
+  "description": "An audio pitch detector and tuner for Polymer",
   "keywords": [
     "web-components",
     "pitch",
