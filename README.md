@@ -1,5 +1,8 @@
 # poly-pitch
+
 An audio pitch detector and tuner for Polymer
+
+![](assets/poly-pitch.png)
 
 View a demo [HERE](https://jamrizzi.github.io/poly-pitch/).
 
